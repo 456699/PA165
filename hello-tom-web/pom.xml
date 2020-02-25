@@ -9,20 +9,40 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-    <tomcat.version>9.0.31</tomcat.version>
+	<maven.compiler.source>8</maven.compiler.source>
+	<maven.compiler.target>8</maven.compiler.target>
+	<tomcat.version>9.0.31</tomcat.version>
   </properties>
 
    <build>
-    <plugins>
-      <!-- embedded Tomcat 9 plugin configuration, use "mvn cargo:run" to run -->
-    
-    </plugins>
+	<plugins>
+		<plugin>
+			<groupId>org.codehaus.cargo</groupId>
+			<artifactId>cargo-maven2-plugin</artifactId>
+			<version>1.7.10</version>
+			<configuration>
+			  <container>
+				<containerId>tomcat9x</containerId>
+				<artifactInstaller>
+				  <groupId>org.apache.tomcat</groupId>
+				  <artifactId>tomcat</artifactId>
+				  <version>${tomcat.version}</version>
+				</artifactInstaller>
+			  </container>
+			  <deployables>
+				  <deployable>
+					  <properties>
+						  <context>/my-different-context</context>
+					  </properties>
+				  </deployable>
+			  </deployables>
+			</configuration>
+		</plugin>
+	</plugins>
   </build>
   
   <dependencies>
-    <dependency>
+	<dependency>
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>tomcat-servlet-api</artifactId>
 		<version>${tomcat.version}</version>
